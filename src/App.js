@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useGlobalContext } from './context'
 
 // components
@@ -7,6 +7,13 @@ import CartContainer from './CartContainer'
 // items
 
 function App() {
+  const {getTotal, cart} = useGlobalContext()
+  useEffect(()=>{
+    getTotal();
+  },[])
+  useEffect(()=>{
+    getTotal();
+  },[cart])
   // if (loading) {
   //   return (
   //     <div className='loading'>

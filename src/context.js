@@ -5,14 +5,47 @@ import reducer from './reducer'
 // I SWITCHED TO PERMANENT DOMAIN
 const url = 'https://course-api.com/react-useReducer-cart-project'
 const AppContext = React.createContext()
+const initialItems ={
+  cart: cartItems,
+  total: 0,
+  amount : 0,
+  loading: false
+}
+
 
 const AppProvider = ({ children }) => {
-  const [cart, setCart] = useState(cartItems)
+  
+  // const [cart, setCart] = useState(cartItems)
+  const [state, dispatch] = useReducer(reducer, initialItems)
+const clearItem = ()=>{
+  dispatch({type: "CLEAR_ITEMS"})
+}
+const removeItem = (id)=>{
+  dispatch({type: "REMOVE", payload: id})
+}
+const increaseItem = (id)=>{
+  dispatch({type: "INCREASE", payload: id})
+  console.log(id);
+}
+const decreaseItem = (id)=>{
+  dispatch({type: "DECREASE", payload: id})
+  console.log(id);
+}
+const getTotal = ()=>{
+  dispatch({type: "TOTAL"})
+  
+}
+
 
   return (
     <AppContext.Provider
       value={{
-        cart,
+        ...state,
+        clearItem,
+        removeItem,
+        increaseItem,
+        decreaseItem,
+        getTotal,
       }}
     >
       {children}
